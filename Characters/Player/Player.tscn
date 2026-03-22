@@ -1,6 +1,37 @@
-[gd_scene load_steps=14 format=3 uid="uid://0huacpqw4drl"]
+[gd_scene load_steps=30 format=3 uid="uid://0huacpqw4drl"]
 
+[ext_resource type="Texture2D" uid="uid://bgxdce8iwjehp" path="res://Assets/Art/Player/Attack3.png" id="1_aj84o"]
 [ext_resource type="Texture2D" uid="uid://cidwxaothkr85" path="res://Assets/Art/Player/Idle.png" id="1_ht6wf"]
+[ext_resource type="Texture2D" uid="uid://c5v2bwq6ons4x" path="res://Assets/Art/Player/Fall.png" id="1_yeefy"]
+[ext_resource type="Texture2D" uid="uid://xpaqafei8dac" path="res://Assets/Art/Player/Run.png" id="2_6mep6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_870kv"]
+atlas = ExtResource("1_aj84o")
+region = Rect2(0, 0, 135, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u61tb"]
+atlas = ExtResource("1_aj84o")
+region = Rect2(135, 0, 135, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u4bhk"]
+atlas = ExtResource("1_aj84o")
+region = Rect2(270, 0, 135, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6hnbq"]
+atlas = ExtResource("1_aj84o")
+region = Rect2(405, 0, 135, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1t7vx"]
+atlas = ExtResource("1_aj84o")
+region = Rect2(540, 0, 135, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8aph"]
+atlas = ExtResource("1_yeefy")
+region = Rect2(0, 0, 135, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_74fb0"]
+atlas = ExtResource("1_yeefy")
+region = Rect2(135, 0, 135, 135)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6mep6"]
 atlas = ExtResource("1_ht6wf")
@@ -42,8 +73,63 @@ region = Rect2(1080, 0, 135, 135)
 atlas = ExtResource("1_ht6wf")
 region = Rect2(1215, 0, 135, 135)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_6h4vt"]
+atlas = ExtResource("2_6mep6")
+region = Rect2(0, 0, 135, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wraqo"]
+atlas = ExtResource("2_6mep6")
+region = Rect2(135, 0, 135, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ij6m"]
+atlas = ExtResource("2_6mep6")
+region = Rect2(270, 0, 135, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2xv0b"]
+atlas = ExtResource("2_6mep6")
+region = Rect2(405, 0, 135, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7jpmk"]
+atlas = ExtResource("2_6mep6")
+region = Rect2(540, 0, 135, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5xivi"]
+atlas = ExtResource("2_6mep6")
+region = Rect2(675, 0, 135, 135)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_t1ilr"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_870kv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u61tb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u4bhk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6hnbq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1t7vx")
+}],
+"loop": false,
+"name": &"Attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k8aph")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_74fb0")
+}],
+"loop": true,
+"name": &"Fall",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6mep6")
@@ -78,6 +164,29 @@ animations = [{
 "loop": true,
 "name": &"Idle",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6h4vt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wraqo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ij6m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2xv0b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7jpmk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5xivi")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 10.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ht6wf"]
@@ -88,12 +197,13 @@ collision_mask = 6
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_t1ilr")
-animation = &"Idle"
+animation = &"Attack"
 autoplay = "Idle"
-frame_progress = 0.0979212
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_ht6wf")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+limit_smoothed = true
+position_smoothing_enabled = true
