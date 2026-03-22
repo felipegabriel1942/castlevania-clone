@@ -2,7 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://byt78xrwqm34e" path="res://Resources/tile_set.tres" id="1_10lgy"]
 [ext_resource type="PackedScene" uid="uid://0huacpqw4drl" path="res://Characters/Player/Player.tscn" id="1_uiqps"]
-[ext_resource type="Script" uid="uid://5r3xjauban72" path="res://Characters/Player/Player.cs" id="3_bq707"]
+[ext_resource type="PackedScene" uid="uid://dapaqwck34un4" path="res://Characters/Enemy/Enemy.tscn" id="2_1i3bd"]
 
 [node name="BaseLevel" type="Node2D"]
 
@@ -20,5 +20,7 @@ tile_set = ExtResource("1_10lgy")
 
 [node name="Player" parent="." instance=ExtResource("1_uiqps")]
 position = Vector2(35, -35)
-script = ExtResource("3_bq707")
 Speed = 80.0
+
+[node name="Enemy" parent="." instance=ExtResource("2_1i3bd")]
+position = Vector2(166, -42)

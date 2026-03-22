@@ -1,7 +1,8 @@
-[gd_scene load_steps=30 format=3 uid="uid://0huacpqw4drl"]
+[gd_scene load_steps=35 format=3 uid="uid://0huacpqw4drl"]
 
 [ext_resource type="Texture2D" uid="uid://bgxdce8iwjehp" path="res://Assets/Art/Player/Attack3.png" id="1_aj84o"]
 [ext_resource type="Texture2D" uid="uid://cidwxaothkr85" path="res://Assets/Art/Player/Idle.png" id="1_ht6wf"]
+[ext_resource type="Script" uid="uid://5r3xjauban72" path="res://Characters/Player/Player.cs" id="1_oc658"]
 [ext_resource type="Texture2D" uid="uid://c5v2bwq6ons4x" path="res://Assets/Art/Player/Fall.png" id="1_yeefy"]
 [ext_resource type="Texture2D" uid="uid://xpaqafei8dac" path="res://Assets/Art/Player/Run.png" id="2_6mep6"]
 
@@ -189,21 +190,126 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aj84o"]
+size = Vector2(54.9748, 45)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ht6wf"]
 size = Vector2(20, 38)
 
+[sub_resource type="Animation" id="Animation_aj84o"]
+resource_name = "Attack"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Attack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0333333, 0.166667, 0.3, 0.433333, 0.566667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%AnimatedSprite2D/../..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.333333, 0.566667),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"StartAttack"
+}, {
+"args": [],
+"method": &"EndAttack"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_oc658"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Attack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oc658"]
+_data = {
+&"Attack": SubResource("Animation_aj84o"),
+&"RESET": SubResource("Animation_oc658")
+}
+
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 6
+script = ExtResource("1_oc658")
+JumpForce = -350.0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Visual"]
+unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_t1ilr")
 animation = &"Attack"
 autoplay = "Idle"
 
+[node name="Hitbox" type="Area2D" parent="Visual"]
+unique_name_in_owner = true
+position = Vector2(30, -5)
+collision_layer = 8
+collision_mask = 64
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Visual/Hitbox"]
+position = Vector2(8.5126, 0)
+shape = SubResource("RectangleShape2D_aj84o")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_ht6wf")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 limit_smoothed = true
 position_smoothing_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Visual/AnimatedSprite2D")
+libraries = {
+&"": SubResource("AnimationLibrary_oc658")
+}
