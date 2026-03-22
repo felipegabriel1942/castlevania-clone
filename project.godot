@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Castlevania Clone"
 run/main_scene="uid://cx5wqirwr4bgk"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+config/features=PackedStringArray("4.4", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]
@@ -24,6 +24,38 @@ window/stretch/mode="canvas_items"
 [dotnet]
 
 project/assembly_name="Castlevania Clone"
+
+[input]
+
+Move_Left={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":65,"key_label":0,"unicode":97,"location":0,"echo":false,"script":null)
+]
+}
+Move_Right={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":68,"key_label":0,"unicode":100,"location":0,"echo":false,"script":null)
+]
+}
+Jump={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":32,"location":0,"echo":false,"script":null)
+]
+}
+Attack={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(111, 19),"global_position":Vector2(120, 67),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
+
+[layer_names]
+
+2d_render/layer_1="Player"
+2d_render/layer_2="Enemy"
+2d_render/layer_3="Ground"
+2d_physics/layer_1="Player"
+2d_physics/layer_2="Enemy"
+2d_physics/layer_3="Ground"
 
 [rendering]
 
