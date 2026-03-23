@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dapaqwck34un4"]
+[gd_scene load_steps=42 format=3 uid="uid://dapaqwck34un4"]
 
 [ext_resource type="Texture2D" uid="uid://hxmfu2vn5j6" path="res://Assets/Art/Enemy/Idle.png" id="1_iupuh"]
 [ext_resource type="Script" uid="uid://tf34ss0rq0m3" path="res://Characters/Enemy/Enemy.cs" id="1_wnb7o"]
@@ -6,6 +6,7 @@
 [ext_resource type="Shader" uid="uid://bjnv7hdoniudd" path="res://Characters/Enemy/Enemy.gdshader" id="2_pbqwj"]
 [ext_resource type="Texture2D" uid="uid://dh67hmcbvseld" path="res://Assets/Art/Enemy/Attack.png" id="2_qdl7v"]
 [ext_resource type="Texture2D" uid="uid://ysm67ifcihvw" path="res://Assets/Art/Enemy/Walk.png" id="4_5wvjq"]
+[ext_resource type="Texture2D" uid="uid://dhbbtpdb2scco" path="res://Assets/Art/Enemy/Death.png" id="4_s3jx0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qdl7v"]
 shader = ExtResource("2_pbqwj")
@@ -42,6 +43,22 @@ region = Rect2(900, 0, 150, 150)
 [sub_resource type="AtlasTexture" id="AtlasTexture_p8cch"]
 atlas = ExtResource("2_qdl7v")
 region = Rect2(1050, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_248c8"]
+atlas = ExtResource("4_s3jx0")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qubgi"]
+atlas = ExtResource("4_s3jx0")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7t8v"]
+atlas = ExtResource("4_s3jx0")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dgrxy"]
+atlas = ExtResource("4_s3jx0")
+region = Rect2(450, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pbqwj"]
 atlas = ExtResource("2_my0yn")
@@ -120,6 +137,23 @@ animations = [{
 }],
 "loop": false,
 "name": &"Attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_248c8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qubgi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m7t8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dgrxy")
+}],
+"loop": false,
+"name": &"Death",
 "speed": 10.0
 }, {
 "frames": [{
@@ -296,6 +330,7 @@ shape = SubResource("RectangleShape2D_pbqwj")
 debug_color = Color(0.926734, 0.226778, 0.381548, 0.42)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
 visible = false
 z_index = 2
 position = Vector2(-3, 0)

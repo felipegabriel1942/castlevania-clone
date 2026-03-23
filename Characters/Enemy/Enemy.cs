@@ -7,6 +7,9 @@ public partial class Enemy : CharacterBody2D
     [Export]
     public float Speed = 40f;
 
+    [Export]
+    public int Health = 3;
+
     private Area2D _hurtbox;
     private AnimatedSprite2D _animatedSprite2D;
     private Player.Player _player;
@@ -17,9 +20,12 @@ public partial class Enemy : CharacterBody2D
     private bool _isHurt = false;
     private bool _inAttackRange = false;
     private bool _isAttacking = false;
+    private bool _isDead = false;
+    private int _currentHealth;
     private AnimationPlayer _animationPlayer;
     private Area2D _hitbox;
     private ShaderMaterial _material;
+    private CollisionShape2D _collision;
 
     public override void _Ready()
     {
@@ -32,7 +38,9 @@ public partial class Enemy : CharacterBody2D
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _hitbox = GetNode<Area2D>("%Hitbox");
         _material = (ShaderMaterial) _animatedSprite2D.Material;
+        _collision = GetNode<CollisionShape2D>("CollisionShape2D");
 
+        _currentHealth = Health;
         _animationPlayer.AnimationFinished += OnAnimationPlayerFinished;
         _animatedSprite2D.AnimationFinished += OnAnimationFinished;
         _detectionArea.BodyEntered += OnDetectionAreaEntered;
@@ -88,9 +96,11 @@ public partial class Enemy : CharacterBody2D
             Velocity += Vector2.Down * gravity * (float) delta;
         } else
         {
+            if (_isDead)
+                return;
+
             if (_isHurt && !_isAttacking)
             {
-                // _isAttacking = false;
                 _animationPlayer.Stop(true);
                 _animatedSprite2D.Play("Hurt");
                 return;
@@ -134,6 +144,14 @@ public partial class Enemy : CharacterBody2D
         }
 
         FlashWhite();
+
+        _currentHealth -= damage;
+        _currentHealth = _currentHealth < 0 ? 0 : _currentHealth;
+
+        if (_currentHealth == 0)
+        {
+            Die();
+        } 
     }
 
     private async void FlashWhite()
@@ -144,7 +162,6 @@ public partial class Enemy : CharacterBody2D
 
         _material.SetShaderParameter("flash", false);
     }
-
 
     public void StartAttack()
     {
@@ -164,5 +181,15 @@ public partial class Enemy : CharacterBody2D
         {
             player.TakeDamage(1);
         }
+    }
+
+    private async void Die()
+    {
+        _isDead = true;
+        _animationPlayer.Stop(true);
+        _animatedSprite2D.Play("Death");
+        _collision.SetDeferred("disabled", true);
+        await ToSignal(GetTree().CreateTimer(2f), "timeout");
+        QueueFree();
     }
 }
