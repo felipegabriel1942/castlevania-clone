@@ -1,10 +1,15 @@
-[gd_scene load_steps=35 format=3 uid="uid://dapaqwck34un4"]
+[gd_scene load_steps=37 format=3 uid="uid://dapaqwck34un4"]
 
 [ext_resource type="Texture2D" uid="uid://hxmfu2vn5j6" path="res://Assets/Art/Enemy/Idle.png" id="1_iupuh"]
 [ext_resource type="Script" uid="uid://tf34ss0rq0m3" path="res://Characters/Enemy/Enemy.cs" id="1_wnb7o"]
 [ext_resource type="Texture2D" uid="uid://cyl7u21ydwg32" path="res://Assets/Art/Enemy/Take Hit.png" id="2_my0yn"]
+[ext_resource type="Shader" uid="uid://bjnv7hdoniudd" path="res://Characters/Enemy/Enemy.gdshader" id="2_pbqwj"]
 [ext_resource type="Texture2D" uid="uid://dh67hmcbvseld" path="res://Assets/Art/Enemy/Attack.png" id="2_qdl7v"]
 [ext_resource type="Texture2D" uid="uid://ysm67ifcihvw" path="res://Assets/Art/Enemy/Walk.png" id="4_5wvjq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qdl7v"]
+shader = ExtResource("2_pbqwj")
+shader_parameter/flash = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8157t"]
 atlas = ExtResource("2_qdl7v")
@@ -271,6 +276,7 @@ script = ExtResource("1_wnb7o")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Visual"]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_qdl7v")
 sprite_frames = SubResource("SpriteFrames_iu8pc")
 animation = &"Attack"
 autoplay = "Idle"

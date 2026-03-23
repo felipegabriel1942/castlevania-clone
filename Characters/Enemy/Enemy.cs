@@ -19,6 +19,7 @@ public partial class Enemy : CharacterBody2D
     private bool _isAttacking = false;
     private AnimationPlayer _animationPlayer;
     private Area2D _hitbox;
+    private ShaderMaterial _material;
 
     public override void _Ready()
     {
@@ -30,6 +31,7 @@ public partial class Enemy : CharacterBody2D
         _attackArea = GetNode<Area2D>("%AttackArea");
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _hitbox = GetNode<Area2D>("%Hitbox");
+        _material = (ShaderMaterial) _animatedSprite2D.Material;
 
         _animationPlayer.AnimationFinished += OnAnimationPlayerFinished;
         _animatedSprite2D.AnimationFinished += OnAnimationFinished;
@@ -86,9 +88,9 @@ public partial class Enemy : CharacterBody2D
             Velocity += Vector2.Down * gravity * (float) delta;
         } else
         {
-            if (_isHurt)
+            if (_isHurt && !_isAttacking)
             {
-                _isAttacking = false;
+                // _isAttacking = false;
                 _animationPlayer.Stop(true);
                 _animatedSprite2D.Play("Hurt");
                 return;
@@ -126,8 +128,23 @@ public partial class Enemy : CharacterBody2D
 
     public void TakeDamage(int damage)
     {
-        _isHurt = true;
+        if (!_isAttacking)
+        {
+           _isHurt = true; 
+        }
+
+        FlashWhite();
     }
+
+    private async void FlashWhite()
+    {
+        _material.SetShaderParameter("flash", true);
+
+        await ToSignal(GetTree().CreateTimer(0.2f), "timeout");
+
+        _material.SetShaderParameter("flash", false);
+    }
+
 
     public void StartAttack()
     {
