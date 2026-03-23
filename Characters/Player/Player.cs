@@ -1,6 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Godot;
+
+using System.Collections.Generic;
 
 namespace CastlevaniaClone.Characters.Player;
 
@@ -16,6 +16,7 @@ public partial class Player : CharacterBody2D
     private Node2D _visual;
     private Area2D _hitbox;
     private bool _isAttacking;
+    private bool _isHurt;
     private HashSet<Node> _enemiesHit = new HashSet<Node>();
 
     public override void _Ready()
@@ -25,8 +26,20 @@ public partial class Player : CharacterBody2D
         _hitbox = GetNode<Area2D>("%Hitbox");
         _visual = GetNode<Node2D>("Visual");
 
+        AddToGroup("Player");
+
         _animationPlayer.AnimationFinished += AnimationFinished;
-       _hitbox.AreaEntered += OnHitboxCollide;
+        _animatedSprite2D.AnimationFinished += OnAnimationFinished;
+        _hitbox.AreaEntered += OnHitboxCollide;
+    }
+
+    private void OnAnimationFinished()
+    {
+        if (_animatedSprite2D.Animation == "Hurt")
+        {
+            _isHurt = false;
+            _animatedSprite2D.Play("Idle");
+        }
     }
 
     private void AnimationFinished(StringName animName)
@@ -39,6 +52,13 @@ public partial class Player : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
+
+        if (_isHurt)
+        {
+            _animatedSprite2D.Play("Hurt");
+            return;
+        }
+
         if (!_isAttacking)
         {
             if (!IsOnFloor())
@@ -100,4 +120,8 @@ public partial class Player : CharacterBody2D
         }
     }
 
+    public void TakeDamage(int damage)
+    {
+        _isHurt = true;
+    }
 }

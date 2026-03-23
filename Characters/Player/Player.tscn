@@ -1,10 +1,11 @@
-[gd_scene load_steps=35 format=3 uid="uid://0huacpqw4drl"]
+[gd_scene load_steps=40 format=3 uid="uid://0huacpqw4drl"]
 
 [ext_resource type="Texture2D" uid="uid://bgxdce8iwjehp" path="res://Assets/Art/Player/Attack3.png" id="1_aj84o"]
 [ext_resource type="Texture2D" uid="uid://cidwxaothkr85" path="res://Assets/Art/Player/Idle.png" id="1_ht6wf"]
 [ext_resource type="Script" uid="uid://5r3xjauban72" path="res://Characters/Player/Player.cs" id="1_oc658"]
 [ext_resource type="Texture2D" uid="uid://c5v2bwq6ons4x" path="res://Assets/Art/Player/Fall.png" id="1_yeefy"]
 [ext_resource type="Texture2D" uid="uid://xpaqafei8dac" path="res://Assets/Art/Player/Run.png" id="2_6mep6"]
+[ext_resource type="Texture2D" uid="uid://bjbyejedrqxmx" path="res://Assets/Art/Player/Get Hit.png" id="4_11ham"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_870kv"]
 atlas = ExtResource("1_aj84o")
@@ -33,6 +34,18 @@ region = Rect2(0, 0, 135, 135)
 [sub_resource type="AtlasTexture" id="AtlasTexture_74fb0"]
 atlas = ExtResource("1_yeefy")
 region = Rect2(135, 0, 135, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tdp7v"]
+atlas = ExtResource("4_11ham")
+region = Rect2(0, 0, 135, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_11ayp"]
+atlas = ExtResource("4_11ham")
+region = Rect2(135, 0, 135, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfeqw"]
+atlas = ExtResource("4_11ham")
+region = Rect2(270, 0, 135, 135)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6mep6"]
 atlas = ExtResource("1_ht6wf")
@@ -133,6 +146,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_tdp7v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_11ayp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bfeqw")
+}],
+"loop": false,
+"name": &"Hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_6mep6")
 }, {
 "duration": 1.0,
@@ -195,6 +222,9 @@ size = Vector2(54.9748, 45)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ht6wf"]
 size = Vector2(20, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oc658"]
+size = Vector2(16, 37)
 
 [sub_resource type="Animation" id="Animation_aj84o"]
 resource_name = "Attack"
@@ -303,6 +333,14 @@ shape = SubResource("RectangleShape2D_aj84o")
 visible = false
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_ht6wf")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-2, -1.5)
+shape = SubResource("RectangleShape2D_oc658")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 limit_smoothed = true
