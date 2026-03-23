@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 using System.Collections.Generic;
 
@@ -8,8 +9,12 @@ public partial class Player : CharacterBody2D
 {
     [Export]
     public float Speed = 40f;
+
     [Export]
     public float JumpForce = -300f;
+
+    [Export]
+    public int Health = 2;
 
     private AnimatedSprite2D _animatedSprite2D;
     private AnimationPlayer _animationPlayer;
@@ -17,6 +22,8 @@ public partial class Player : CharacterBody2D
     private Area2D _hitbox;
     private bool _isAttacking;
     private bool _isHurt;
+    private bool _isDead;
+    private int _currentHealth;
     private HashSet<Node> _enemiesHit = new HashSet<Node>();
 
     public override void _Ready()
@@ -25,6 +32,7 @@ public partial class Player : CharacterBody2D
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _hitbox = GetNode<Area2D>("%Hitbox");
         _visual = GetNode<Node2D>("Visual");
+        _currentHealth = Health;
 
         AddToGroup("Player");
 
@@ -52,6 +60,10 @@ public partial class Player : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
+        if (_isDead)
+        {
+            return;
+        }
 
         if (_isHurt)
         {
@@ -122,6 +134,29 @@ public partial class Player : CharacterBody2D
 
     public void TakeDamage(int damage)
     {
+        if (_isDead)
+            return;
+
+        _animationPlayer.Stop(true);
+        
         _isHurt = true;
+        _currentHealth -= damage;
+        _currentHealth = _currentHealth < 0 ? 0 : _currentHealth;
+
+        if (_currentHealth == 0)
+        {
+            Die();
+        }
     }
+
+    private async void Die()
+    {
+        _isDead = true;
+        _animatedSprite2D.Play("Death");
+
+        await ToSignal(GetTree().CreateTimer(4f), "timeout");
+
+        GetTree().ReloadCurrentScene();
+    }
+
 }
