@@ -1,3 +1,4 @@
+using CastlevaniaClone.Scenes;
 using Godot;
 using System;
 
@@ -39,6 +40,8 @@ public partial class Player : CharacterBody2D
         _animationPlayer.AnimationFinished += AnimationFinished;
         _animatedSprite2D.AnimationFinished += OnAnimationFinished;
         _hitbox.AreaEntered += OnHitboxCollide;
+        
+        GameEvents.EmitPlayerMaxHealth(Health);
     }
 
     private void OnAnimationFinished()
@@ -142,6 +145,8 @@ public partial class Player : CharacterBody2D
         _isHurt = true;
         _currentHealth -= damage;
         _currentHealth = _currentHealth < 0 ? 0 : _currentHealth;
+
+        GameEvents.EmitPlayerCurrentHealth(_currentHealth);
 
         if (_currentHealth == 0)
         {

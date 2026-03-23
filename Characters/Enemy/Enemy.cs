@@ -37,7 +37,8 @@ public partial class Enemy : CharacterBody2D
         _attackArea = GetNode<Area2D>("%AttackArea");
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _hitbox = GetNode<Area2D>("%Hitbox");
-        _material = (ShaderMaterial) _animatedSprite2D.Material;
+        _material = (ShaderMaterial) _animatedSprite2D.Material.Duplicate();
+        _animatedSprite2D.Material = _material;
         _collision = GetNode<CollisionShape2D>("CollisionShape2D");
 
         _currentHealth = Health;
@@ -138,6 +139,9 @@ public partial class Enemy : CharacterBody2D
 
     public void TakeDamage(int damage)
     {
+        if (_isDead)
+            return;
+
         if (!_isAttacking)
         {
            _isHurt = true; 
