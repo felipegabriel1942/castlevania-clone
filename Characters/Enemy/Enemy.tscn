@@ -186,7 +186,7 @@ size = Vector2(63, 59)
 
 [sub_resource type="Animation" id="Animation_qdl7v"]
 resource_name = "Attack"
-length = 2.0
+length = 1.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -206,7 +206,7 @@ tracks/1/path = NodePath("Visual/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.4, 1.46667, 1.6, 1.73333, 1.86667),
+"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.4, 1.3, 1.43333, 1.56667, 1.7),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
@@ -218,7 +218,7 @@ tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(1.73333, 1.9),
+"times": PackedFloat32Array(1.56667, 1.73333),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
