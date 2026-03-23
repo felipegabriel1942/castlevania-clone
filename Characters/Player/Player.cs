@@ -1,8 +1,6 @@
-using CastlevaniaClone.Scenes;
 using Godot;
-using System;
-
 using System.Collections.Generic;
+using CastlevaniaClone.Scenes;
 
 namespace CastlevaniaClone.Characters.Player;
 
@@ -17,14 +15,19 @@ public partial class Player : CharacterBody2D
     [Export]
     public int Health = 2;
 
+    [Export]
+    private int Stamina = 2;
+
     private AnimatedSprite2D _animatedSprite2D;
     private AnimationPlayer _animationPlayer;
     private Node2D _visual;
     private Area2D _hitbox;
+    private Timer _staminaTimer;
     private bool _isAttacking;
     private bool _isHurt;
     private bool _isDead;
     private int _currentHealth;
+    private int _currentStamina;
     private HashSet<Node> _enemiesHit = new HashSet<Node>();
 
     public override void _Ready()
@@ -33,15 +36,26 @@ public partial class Player : CharacterBody2D
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _hitbox = GetNode<Area2D>("%Hitbox");
         _visual = GetNode<Node2D>("Visual");
+        _staminaTimer = GetNode<Timer>("Timer");
         _currentHealth = Health;
+        _currentStamina = Stamina;
 
         AddToGroup("Player");
 
         _animationPlayer.AnimationFinished += AnimationFinished;
         _animatedSprite2D.AnimationFinished += OnAnimationFinished;
         _hitbox.AreaEntered += OnHitboxCollide;
+        _staminaTimer.Timeout += OnTimerTimeout;
         
         GameEvents.EmitPlayerMaxHealth(Health);
+    }
+
+    private void OnTimerTimeout()
+    {
+        if (_currentStamina < Stamina)
+        {
+            _currentStamina += 1;
+        }
     }
 
     private void OnAnimationFinished()
@@ -84,16 +98,21 @@ public partial class Player : CharacterBody2D
             } else if (IsOnFloor() && Input.IsActionJustPressed("Jump"))
             {
                 Velocity = new Vector2(Velocity.X, JumpForce);
-            } else if (IsOnFloor() && Input.IsActionJustPressed("Attack"))
+            } else if (IsOnFloor() && Input.IsActionJustPressed("Attack") && _currentStamina > 0)
             {
                 _isAttacking = true;
                 Velocity = Vector2.Zero;
                 _animationPlayer.Play("Attack");
             } else if (IsMoving())
             {
-                float movementDirection = Input.GetAxis("Move_Left", "Move_Right");
-                Velocity = new Vector2(movementDirection * Speed, 0);
-                _visual.Scale = new Vector2(movementDirection > 0 ? 1 : -1 , 1);
+                float direction = Input.GetAxis("Move_Left", "Move_Right");
+                Velocity = new Vector2(direction * Speed, 0);
+
+                if (direction != 0)
+                {
+                    _visual.Scale = new Vector2(direction > 0 ? 1 : -1 , 1);
+                }
+                
                 _animatedSprite2D.Play("Run");
             } else
             {
@@ -113,6 +132,8 @@ public partial class Player : CharacterBody2D
     public void StartAttack()
     {
         _enemiesHit.Clear();
+        _currentStamina = Mathf.Max(0, _currentStamina - 1);
+        _staminaTimer.Start();
         _hitbox.Monitoring = true;
         _hitbox.Monitorable = true;
     }
@@ -163,5 +184,4 @@ public partial class Player : CharacterBody2D
 
         GetTree().ReloadCurrentScene();
     }
-
 }

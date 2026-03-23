@@ -421,3 +421,6 @@ root_node = NodePath("../Visual/AnimatedSprite2D")
 libraries = {
 &"": SubResource("AnimationLibrary_oc658")
 }
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0

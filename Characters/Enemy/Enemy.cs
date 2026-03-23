@@ -45,7 +45,6 @@ public partial class Enemy : CharacterBody2D
         _animationPlayer.AnimationFinished += OnAnimationPlayerFinished;
         _animatedSprite2D.AnimationFinished += OnAnimationFinished;
         _detectionArea.BodyEntered += OnDetectionAreaEntered;
-        _detectionArea.BodyExited += OnDetectionAreaExited;
         _attackArea.BodyEntered += OnAttackAreaEntered;
         _attackArea.BodyExited += OnAttackAreaExited;
         _hitbox.AreaEntered += OnHitboxCollide;
@@ -58,11 +57,6 @@ public partial class Enemy : CharacterBody2D
             _isAttacking = false;
             _animatedSprite2D.Play("Idle");
         }
-    }
-
-    private void OnDetectionAreaExited(Node2D body)
-    {
-        _isPursuing = false;
     }
 
     private void OnAttackAreaExited(Node2D body)

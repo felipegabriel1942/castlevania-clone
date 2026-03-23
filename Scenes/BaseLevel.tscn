@@ -69,52 +69,39 @@ position = Vector2(112, -72)
 
 [node name="Torch2" parent="Torches" instance=ExtResource("4_1i3bd")]
 position = Vector2(274, -70)
-color = Color(0.8, 0.486275, 0.168627, 1)
 
 [node name="Torch3" parent="Torches" instance=ExtResource("4_1i3bd")]
 position = Vector2(434, -70)
-color = Color(0.8, 0.486275, 0.168627, 1)
 
 [node name="Torch4" parent="Torches" instance=ExtResource("4_1i3bd")]
 position = Vector2(592, -71)
-color = Color(0.8, 0.486275, 0.168627, 1)
 
 [node name="Torch5" parent="Torches" instance=ExtResource("4_1i3bd")]
 position = Vector2(696, -103)
-color = Color(0.8, 0.486275, 0.168627, 1)
 
 [node name="Torch6" parent="Torches" instance=ExtResource("4_1i3bd")]
 position = Vector2(790, -104)
-color = Color(0.8, 0.486275, 0.168627, 1)
 
 [node name="Torch10" parent="Torches" instance=ExtResource("4_1i3bd")]
 position = Vector2(750, -14)
-color = Color(0.8, 0.486275, 0.168627, 1)
 
 [node name="Torch13" parent="Torches" instance=ExtResource("4_1i3bd")]
 position = Vector2(843, -15)
-color = Color(0.8, 0.486275, 0.168627, 1)
 
 [node name="Torch7" parent="Torches" instance=ExtResource("4_1i3bd")]
 position = Vector2(890, -104)
-color = Color(0.8, 0.486275, 0.168627, 1)
 
 [node name="Torch8" parent="Torches" instance=ExtResource("4_1i3bd")]
 position = Vector2(1034, -114)
-color = Color(0.8, 0.486275, 0.168627, 1)
 
 [node name="Torch9" parent="Torches" instance=ExtResource("4_1i3bd")]
 position = Vector2(1230, -145)
-color = Color(0.8, 0.486275, 0.168627, 1)
 
 [node name="Torch11" parent="Torches" instance=ExtResource("4_1i3bd")]
 position = Vector2(1440, -177)
-color = Color(0.8, 0.486275, 0.168627, 1)
 
 [node name="Torch12" parent="Torches" instance=ExtResource("4_1i3bd")]
 position = Vector2(1624, -204)
-color = Color(0.8, 0.486275, 0.168627, 1)
 
 [node name="Torch14" parent="Torches" instance=ExtResource("4_1i3bd")]
 position = Vector2(1730, -205)
-color = Color(0.8, 0.486275, 0.168627, 1)
